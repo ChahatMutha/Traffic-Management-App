@@ -1,0 +1,10 @@
+{
+  "hi": [
+    "menu_report_incident"
+  ],
+
+  "mr": [
+    "menu_report_violation",
+    "vehicleNumber"
+  ]
+}

@@ -1,0 +1,30 @@
+// lib/controllers/language_controller.dart
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+final languageProvider = StateNotifierProvider<LanguageController, Locale>((ref) {
+  return LanguageController();
+});
+
+class LanguageController extends StateNotifier<Locale> {
+  static const _languageKey = 'selected_language';
+
+  LanguageController() : super(const Locale('en')) {
+    _loadSavedLanguage();
+  }
+
+  Future<void> _loadSavedLanguage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final langCode = prefs.getString(_languageKey);
+    if (langCode != null) {
+      state = Locale(langCode);
+    }
+  }
+
+  Future<void> changeLanguage(String languageCode) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_languageKey, languageCode);
+    state = Locale(languageCode);
+  }
+}
